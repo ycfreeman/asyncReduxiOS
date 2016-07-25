@@ -8,7 +8,7 @@ module.exports = {
     //   'webpack-hot-middleware/client',
     //   './index'
     // ],
-    'iosReduxAsync/iosReduxAsync/Assets.xcassets/js/app.dataset': './index',
+    'iosReduxAsync/iosReduxAsync/js': './index',
     '/':'./index'
   },
   output: {

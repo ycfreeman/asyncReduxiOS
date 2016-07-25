@@ -1,0 +1,4 @@
+github "ReactiveX/RxSwift" "2.6.0"
+github "Lukas-Stuehrk/WindowTimers" "0.1.0"
+github "Lukas-Stuehrk/XMLHTTPRequest" "0.1.0"
+github "RxSwiftCommunity/RxDataSources" "0.9"

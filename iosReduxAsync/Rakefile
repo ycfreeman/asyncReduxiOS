@@ -1,0 +1,3 @@
+task :carthage do
+  `carthage update --no-build --platform ios`
+end

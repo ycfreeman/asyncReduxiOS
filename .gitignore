@@ -1,0 +1,13 @@
+.DS_Store
+*.log
+node_modules
+dist
+lib
+es
+coverage
+_book
+
+.idea/
+
+iosReduxAsync/**/app.js
+app.js

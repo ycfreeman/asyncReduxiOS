@@ -9,7 +9,7 @@ module.exports = {
     //   './index'
     // ],
     'iosReduxAsync/iosReduxAsync/js': './index',
-    '/':'./index'
+    'dist':'./index'
   },
   output: {
     path: path.join(__dirname, '/'),

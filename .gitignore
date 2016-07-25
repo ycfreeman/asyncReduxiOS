@@ -10,4 +10,4 @@ _book
 .idea/
 
 iosReduxAsync/**/app.js
-app.js
+dist/app.js

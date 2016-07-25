@@ -10,8 +10,6 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxDataSources
-import WindowTimers
-import XMLHTTPRequest
 import JavaScriptCore
 
 class ViewController: UIViewController {

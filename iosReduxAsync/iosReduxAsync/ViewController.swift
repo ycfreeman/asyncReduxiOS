@@ -15,9 +15,8 @@ import WebKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet weak var webView: UIWebView!
 
     let dispose = DisposeBag()
     
@@ -68,6 +67,11 @@ class ViewController: UIViewController {
         // seems we can just make a hidden webView and use JSContext inside
         let context: JSContext =
             webView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") as! JSContext
+        
+//        let context: JSContext = JSContext()
+//        WTWindowTimers().extend(context)
+//        XMLHttpRequest().extend(context)
+        
         
         // load js file from bundle and evaluate
         // invoke from redux if changes occur

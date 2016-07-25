@@ -1,9 +1,13 @@
-proof of concept
+Proof of Concept
 using JS redux + hidden UIWebView (JavaScriptCore) + RxSwift
 
 this project illustrate possibility to run "headless" javascript data layer and network operations
 to drive a native iOS UI layer, this is to explore the possibility to have a cross-platform core, 
-while keeping UI layer platform specific, RxSwift + RxDataSource is just there to simplify UITableView binding
+while keeping UI layer native so we can use native stuff like StoryBoard amoung other good things
+
+RxSwift + RxDataSource is just there to simplify UITableView binding
+
+using hidden UIWebView as oppose to true headless JSContext is for easier debugging and XMLHTTPRequest abilities
 
 # Build Instructions
 
@@ -22,3 +26,6 @@ then open iosReduxAsync.xcodeproj in xcode
 
 ---
 js part is from https://github.com/reactjs/redux/tree/master/examples/async with minimal modifications
+
+---
+TODO: need to use true headless JSContext? performance test needed

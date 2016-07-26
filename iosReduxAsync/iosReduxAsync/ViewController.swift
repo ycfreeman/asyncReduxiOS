@@ -24,6 +24,10 @@ class ViewController: UIViewController {
     
     let reloadDataSource = RxTableViewSectionedReloadDataSource<JSItemSection>()
     
+    @IBOutlet weak var button: UIButton!
+    
+    var context: JSContext?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -64,9 +68,11 @@ class ViewController: UIViewController {
             .addDisposableTo(dispose)
         
         
+        
         // seems we can just make a hidden webView and use JSContext inside
-        let context: JSContext =
-            webView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") as! JSContext
+        
+        
+        context = webView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") as? JSContext
         
 //        let context: JSContext = JSContext()
 //        WTWindowTimers().extend(context)
@@ -88,12 +94,20 @@ class ViewController: UIViewController {
         
         // so we evaluate it
         
-        context.setObject(JSItem.self, forKeyedSubscript: "JSItem")
-        context.exceptionHandler = { context, exception in
+        context?.setObject(JSItem.self, forKeyedSubscript: "JSItem")
+        context?.exceptionHandler = { context, exception in
             print("JS Error: \(exception)")
         }
-        context.evaluateScript(jsApp)
-        context.evaluateScript("fetchPosts();")
+        context?.evaluateScript(jsApp)
+        context?.evaluateScript("fetchMorePosts();")
+        
+        button.rx_tap
+            .observeOn(MainScheduler.instance)
+            .bindNext {
+                [weak context] in
+                context?.evaluateScript("fetchMorePosts();")
+            }.addDisposableTo(dispose)
+
 
     }
 

@@ -28,6 +28,22 @@ function fetchPosts(reddit) {
     store.dispatch(fetchPostsIfNeeded(reddit || 'reactjs'));
 }
 
+
+var count = 0;
+
+
+function fetchMorePosts() {
+  if (count == 0) {
+     fetchPosts('reactjs');
+  } else if (count == 1) {
+     fetchPosts('facebook');
+  } else if (count == 2) {
+     fetchPosts('angularjs');
+  }
+  count += 1;
+}
+
 store.subscribe(update);
 
 window.fetchPosts = fetchPosts;
+window.fetchMorePosts = fetchMorePosts;

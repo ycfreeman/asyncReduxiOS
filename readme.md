@@ -14,7 +14,7 @@ using hidden UIWebView as oppose to true headless JSContext is for easier debugg
 ## Build JS
 ```
 npm i
-npm build
+npm run build
 ```
 
 ## Build iOS

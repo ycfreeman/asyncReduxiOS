@@ -16,17 +16,25 @@ import WebKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var webView: UIWebView!
+    
+    
+    let webView: UIWebView = UIWebView()
 
     let dispose = DisposeBag()
     
     var sections: [JSItemSection] = []
     
-    let reloadDataSource = RxTableViewSectionedReloadDataSource<JSItemSection>()
+    let reloadDataSource = RxTableViewSectionedAnimatedDataSource<JSItemSection>()
     
     @IBOutlet weak var button: UIButton!
     
-    var context: JSContext?
+    lazy var context: JSContext? = {
+        guard let context = self.webView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") as? JSContext else {
+            return nil
+        }
+        
+        return context
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +42,10 @@ class ViewController: UIViewController {
         
         webView.hidden = true
         webView.frame = CGRect.zero
+        webView.delegate = self
+
+        view.addSubview(webView)
+        
         
         reloadDataSource.configureCell = {
             (dataSource, tableView, indexPath, item: JSItem) in
@@ -43,11 +55,11 @@ class ViewController: UIViewController {
             // bind view
             
             if let cellDetailLabel: UILabel = cell.detailTextLabel {
-                item.intOutlet.bindTo(cellDetailLabel.rx_text).addDisposableTo(cell.dispose!)
+                item.intOutlet.observeOn(MainScheduler.asyncInstance).bindTo(cellDetailLabel.rx_text).addDisposableTo(cell.dispose!)
             }
             
             if let cellTitleLabel: UILabel = cell.textLabel {
-                item.strOutlet.bindTo(cellTitleLabel.rx_text).addDisposableTo(cell.dispose!)
+                item.strOutlet.observeOn(MainScheduler.asyncInstance).bindTo(cellTitleLabel.rx_text).addDisposableTo(cell.dispose!)
             }
             
             return cell
@@ -72,7 +84,7 @@ class ViewController: UIViewController {
         // seems we can just make a hidden webView and use JSContext inside
         
         
-        context = webView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") as? JSContext
+//        context = webView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") as? JSContext
         
 //        let context: JSContext = JSContext()
 //        WTWindowTimers().extend(context)
@@ -117,5 +129,13 @@ class ViewController: UIViewController {
     }
 
 
+}
+
+extension ViewController: UIWebViewDelegate {
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        print(request)
+        
+        return true
+    }
 }
 
